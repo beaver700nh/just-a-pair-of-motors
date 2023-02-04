@@ -7,7 +7,7 @@
 #include <frc/TimedRobot.h>
 #include <frc/XboxController.h>
 
-#include <ctre/phoenix/motorcontrol/can/WPI_TalonSRX.h>
+#include <rev/CANSparkMax.h>
 
 class Robot : public frc::TimedRobot {
 public:
@@ -26,7 +26,7 @@ public:
 
 private:
   frc::XboxController m_controller {0};
-  ctre::phoenix::motorcontrol::can::WPI_TalonSRX m_motor {1};
+  rev::CANSparkMax m_motor {7, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 
   double m_power = 0.0;
   constexpr static double m_ramp = 0.05;
