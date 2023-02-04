@@ -7,7 +7,7 @@
 #include <frc/TimedRobot.h>
 #include <frc/XboxController.h>
 
-#include <ctre/phoenix/motorcontrol/can/WPI_VictorSPX.h>
+#include <ctre/phoenix/motorcontrol/can/WPI_TalonSRX.h>
 
 class Robot : public frc::TimedRobot {
 public:
@@ -26,7 +26,7 @@ public:
 
 private:
   frc::XboxController m_controller {0};
-  ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_motor {1};
+  ctre::phoenix::motorcontrol::can::WPI_TalonSRX m_motor {1};
 
   double m_power = 0.0;
   constexpr static double m_ramp = 0.05;
