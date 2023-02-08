@@ -9,6 +9,16 @@
 
 #include <rev/CANSparkMax.h>
 
+using MotorType = rev::CANSparkMaxLowLevel::MotorType;
+
+struct MotorThing {
+  rev::CANSparkMax m_motor;
+  double m_power;
+  const double m_ramp;
+
+  void set_power(double power);
+};
+
 class Robot : public frc::TimedRobot {
 public:
   void RobotInit() override;
@@ -26,8 +36,6 @@ public:
 
 private:
   frc::XboxController m_controller {0};
-  rev::CANSparkMax m_motor {7, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-
-  double m_power = 0.0;
-  constexpr static double m_ramp = 0.05;
+  MotorThing m_extender {rev::CANSparkMax {7, MotorType::kBrushless}, 0.0, 0.05};
+  MotorThing m_pivoter {rev::CANSparkMax {8, MotorType::kBrushless}, 0.0, 0.05};
 };

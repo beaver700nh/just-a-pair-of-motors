@@ -7,6 +7,17 @@
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
+void MotorThing::set_power(double power) {
+  if (power > m_power) {
+    m_power = fmin(power, m_power + m_ramp);
+  }
+  if (power < m_power) {
+    m_power = fmax(power, m_power - m_ramp);
+  }
+
+  m_motor.Set(m_power);
+}
+
 void Robot::RobotInit() {}
 
 /**
@@ -37,16 +48,11 @@ void Robot::AutonomousPeriodic() {}
 void Robot::TeleopInit() {}
 
 void Robot::TeleopPeriodic() {
-  auto power = m_controller.GetRightTriggerAxis() - m_controller.GetLeftTriggerAxis();
+  auto power_extender = m_controller.GetLeftY();
+  m_extender.set_power(power_extender);
 
-  if (power > m_power) {
-    m_power = fmin(power, m_power + m_ramp);
-  }
-  if (power < m_power) {
-    m_power = fmax(power, m_power - m_ramp);
-  }
-
-  m_motor.Set(m_power);
+  auto power_pivoter = m_controller.GetRightY();
+  m_pivoter.set_power(power_pivoter);
 }
 
 void Robot::DisabledInit() {}
